@@ -1,0 +1,62 @@
+from utils.regression_trainer_BL import RegTrainer, RegTrainer_FD
+import argparse
+import os
+import torch
+args = None
+
+def parse_args():
+    parser = argparse.ArgumentParser(description='Train ')
+    parser.add_argument('--model-name', default='FD_BL', help='the name of the model')
+    parser.add_argument('--data-dir', default="./data/DarkCrowd/",
+                        help='training data directory')
+    parser.add_argument('--save-dir', default='FD_BL_DarkCrowd',
+                        help='directory to save models.')
+    parser.add_argument('--lr', type=float, default=1e-5,
+                        help='the initial learning rate')
+    parser.add_argument('--weight-decay', type=float, default=1e-4,
+                        help='the weight decay')
+    parser.add_argument('--resume', default='',
+                        help='the path of resume training model')
+    parser.add_argument('--max-model-num', type=int, default=1,
+                        help='max models num to save ')
+    parser.add_argument('--max-epoch', type=int, default=100,
+                        help='max training epoch')
+    parser.add_argument('--val-epoch', type=int, default=1,
+                        help='the num of steps to log training information')
+    parser.add_argument('--val-start', type=int, default=0,
+                        help='the epoch start to val')
+    parser.add_argument('--batch-size', type=int, default=1,
+                        help='train batch size')
+    parser.add_argument('--device', default='7', help='assign device')
+    parser.add_argument('--num-workers', type=int, default=8,
+                        help='the num of training process')
+    parser.add_argument('--is-gray', type=bool, default=False,
+                        help='whether the input image is gray')
+    parser.add_argument('--crop-size', type=int, default=512,
+                        help='the crop size of the train image')
+    parser.add_argument('--downsample-ratio', type=int, default=8,
+                        help='downsample ratio')
+    parser.add_argument('--use-background', type=bool, default=True,
+                        help='whether to use background modelling')
+    parser.add_argument('--sigma', type=float, default=8.0,
+                        help='sigma for likelihood')
+    parser.add_argument('--background-ratio', type=float, default=1.0,
+                        help='background ratio')
+    parser.add_argument('--lamda', type=float, default=10000.,
+                        help='weight of consistency and reconstruction loss')
+    args = parser.parse_args()
+    return args
+
+
+if __name__ == '__main__':
+    args = parse_args()
+    torch.backends.cudnn.benchmark = True
+    os.environ['CUDA_VISIBLE_DEVICES'] = args.device.strip()  # set vis gpu
+    if args.model_name == 'BL':
+        trainer = RegTrainer(args)
+    elif args.model_name == 'FD_BL':
+        trainer = RegTrainer_FD(args)
+    else:
+        raise Exception("Not implement")
+    trainer.setup()
+    trainer.train()
