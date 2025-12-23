@@ -1,4 +1,3 @@
-```
 This repository includes the official implementation of our illumination-robust feature decomposition approach for low-light crowd counting, presented in our paper:
 
 **[An Illumination-robust Feature Decomposition Approach for Low-light Crowd Counting]()**
@@ -42,4 +41,3 @@ The code are only for non-commercial purposes. Copyrights reserved.
 
 Contact: 
 Jian Cheng (jian_cheng@hust.edu.cn) 
-```
