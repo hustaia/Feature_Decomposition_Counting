@@ -23,7 +23,7 @@ performance in low-light environments. The dataset can be downloaded **[here](ht
 ### Usage
 Before training and testing, preprocess the dataset with
 ​```
-python preprocess_dataset_DarkCrowd.py
+python preprocess_dataset.py
 ​```
 
 To train the model, run
@@ -41,5 +41,6 @@ The code are only for non-commercial purposes. Copyrights reserved.
 
 Contact: 
 Jian Cheng (jian_cheng@hust.edu.cn) 
+
 
 
